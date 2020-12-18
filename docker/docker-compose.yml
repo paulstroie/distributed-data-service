@@ -1,0 +1,27 @@
+version: '3.7'
+
+networks:
+  ingress:
+    driver: overlay
+  network-data-share:
+    external: true
+
+services:
+  distributed-data-service:
+    image: distributed-data-service:1.0
+    deploy:
+      replicas: 3
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 3
+        window: 120s
+    ports:
+      - "9094:9094"
+      - "47500:47500"
+      - "47501:47501"
+      - "47502:47502"
+      - "47503:47503"
+    networks:
+      - ingress
+      - network-data-share
