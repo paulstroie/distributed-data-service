@@ -1,27 +1,27 @@
-package org.ps.distributed.data;
+package org.ps.distributed.data.hz;
 
 import com.hazelcast.core.HazelcastInstance;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 import java.util.Map;
 
-@Service
+@Component
 public class HazelcastData<K,V> {
 
     @Autowired
-    private HazelcastInstance hazelcastInstance;
+    private HazelcastComponent hz;
 
-    public Map<K, V> getMap(String map){
-        return hazelcastInstance.getMap(map);
-    }
-
-    public Object getData(String map, K key){
-        Map<K, V> mapGrid = hazelcastInstance.getMap(map);
+    public V getData(HzAllowedMaps map, K key){
+        Map<K, V> mapGrid = hz.hazelcastInstance.getMap(map.toString());
         return mapGrid.get(key);
     }
 
-    public void distributeData(String map, Map.Entry<K, V> data){
-        hazelcastInstance.getMap(map).put(data.getKey(), data.getValue());
+    public void distributeData(HzAllowedMaps map, Map.Entry<K, V> data){
+        hz.hazelcastInstance.getMap(map.toString()).put(data.getKey(), data.getValue());
+    }
+
+    public void distributeData(HzAllowedMaps map, Map<K, V> data){
+        hz.hazelcastInstance.getMap(map.toString()).putAll(data);
     }
 }

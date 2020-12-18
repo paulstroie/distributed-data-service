@@ -13,3 +13,5 @@ docker network create -d bridge --scope=swarm network-data-share
 docker stack deploy -c docker/docker-compose.yml micro
 
 http://localhost:9094/api/v1/health
+
+http://localhost:9094/swagger-ui.html#/
