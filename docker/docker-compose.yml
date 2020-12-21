@@ -7,6 +7,23 @@ networks:
     external: true
 
 services:
+  hazelcast-manager:
+    image: hazelcast/management-center:4.0.3
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 3
+        window: 120s
+    environment:
+      - MC_ADMIN_USER=admin
+      - MC_ADMIN_PASSWORD=myPassword11
+    ports:
+      - "8094:8080"
+    networks:
+      - ingress
+      - network-data-share
   distributed-data-service:
     image: distributed-data-service:1.0
     deploy:
@@ -18,10 +35,7 @@ services:
         window: 120s
     ports:
       - "9094:9094"
-      - "47500:47500"
-      - "47501:47501"
-      - "47502:47502"
-      - "47503:47503"
+      - "5701:5701"
     networks:
       - ingress
       - network-data-share
