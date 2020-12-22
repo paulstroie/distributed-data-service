@@ -1,0 +1,12 @@
+server:
+  nodeId: ${hostname:1}
+  port: 9095
+  accessControlAllowOrigin:
+  ssl:
+    enabled: false
+    key-store:
+    key-store-password:
+
+healthcheck:
+  maxHeapUsage: 0.8
+  minDiskFreeSpace: 2147483648

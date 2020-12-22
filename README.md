@@ -10,7 +10,7 @@ Jdk 1.8
 Maven 4
 Docker
 
-mvn clean install
+mvn clean install -Pswarm
 
 docker build --build-arg PORT=9094 --build-arg JAR_FILE=distributed-data-service-1.0.jar -t distributed-data-service:1.0 -f docker/Dockerfile .
 
