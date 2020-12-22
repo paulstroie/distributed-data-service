@@ -9,7 +9,7 @@ EXPOSE ${PORT}
 COPY target/${JAR_FILE} $HOME/app.jar
 COPY docker/health-check.sh $HOME/health-check.sh
 
-ENV HEALTH_CHECK_URL https://localhost:${PORT}/api/v1/health
+ENV HEALTH_CHECK_URL http://localhost:${PORT}/api/v1/health
 ENV JAVA_OPTS ${JAVA_OPTS}
 
 LABEL Dockerfile="https://github.com/paulstroie/distributed-data-service/docker/Dockerfile"
@@ -19,6 +19,7 @@ WORKDIR $HOME
 USER root
 
 RUN apk update
+RUN apk add bash
 RUN apk add wget
 RUN mkdir logs
 RUN addgroup -S java && adduser -S java -G java
@@ -27,7 +28,7 @@ RUN chmod +x health-check.sh
 
 USER java
 
-#HEALTHCHECK --interval=30s --timeout=20s --start-period=120s --retries=3 CMD ./health-check.sh
+HEALTHCHECK --interval=30s --timeout=20s --start-period=120s --retries=3 CMD ./health-check.sh
 
 CMD ["java", "-jar", "app.jar"]
 
