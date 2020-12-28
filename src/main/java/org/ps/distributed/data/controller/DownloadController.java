@@ -15,7 +15,7 @@ public class DownloadController {
     HazelcastData<String, String> hazelcastData;
 
     @GetMapping(value = "/download/{map}/{key}")
-    public String createRide(@PathVariable HzAllowedMaps map, @PathVariable String key){
+    public String downloadData(@PathVariable HzAllowedMaps map, @PathVariable String key){
         return hazelcastData.getData(map, key);
     }
 }

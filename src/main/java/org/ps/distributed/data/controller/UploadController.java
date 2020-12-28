@@ -17,7 +17,7 @@ public class UploadController {
     HazelcastData<String, String> hazelcastData;
 
     @PostMapping(value = "/upload/{map}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public void createRide(@PathVariable HzAllowedMaps map, @RequestBody Map<String, String> dataToFeed) {
+    public void uploadData(@PathVariable HzAllowedMaps map, @RequestBody Map<String, String> dataToFeed) {
         hazelcastData.distributeData(map, dataToFeed);
     }
 }
